@@ -10,7 +10,7 @@ public class MemberViewModel extends ViewModel {
 
     public MemberViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is dashboard fragment");
+        mText.setValue("회원관리 fragment");
     }
 
     public LiveData<String> getText() {

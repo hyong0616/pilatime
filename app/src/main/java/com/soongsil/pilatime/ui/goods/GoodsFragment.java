@@ -23,7 +23,7 @@ public class GoodsFragment extends Fragment {
         goodsViewModel =
                 ViewModelProviders.of(this).get(GoodsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_goods, container, false);
-        final TextView textView = root.findViewById(R.id.text_dashboard);
+        final TextView textView = root.findViewById(R.id.text_goods);
         goodsViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
