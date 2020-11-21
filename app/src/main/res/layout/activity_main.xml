@@ -38,6 +38,7 @@
             android:layout_height="wrap_content"
             android:textSize="24sp"
             android:id="@+id/btn1"
+            android:onClick="btn1Click"
             android:text="로그인" />
 
         <Button
@@ -45,6 +46,7 @@
             android:layout_height="wrap_content"
             android:textSize="24sp"
             android:id="@+id/btn2"
+            android:onClick="btn2Click"
             android:text="회원가입" />
 
     </LinearLayout>
