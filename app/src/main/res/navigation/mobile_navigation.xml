@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_calendar">
+
+    <fragment
+        android:id="@+id/navigation_calendar"
+        android:name="com.soongsil.pilatime.ui.calendar.CalendarFragment"
+        android:label="@string/title_calendar"
+        tools:layout="@layout/fragment_calendar" />
+
+    <fragment
+        android:id="@+id/navigation_member"
+        android:name="com.soongsil.pilatime.ui.member.MemberFragment"
+        android:label="@string/title_member"
+        tools:layout="@layout/fragment_member" />
+
+    <fragment
+        android:id="@+id/navigation_goods"
+        android:name="com.soongsil.pilatime.ui.goods.GoodsFragment"
+        android:label="@string/title_goods"
+        tools:layout="@layout/fragment_goods" />
+
+    <fragment
+        android:id="@+id/navigation_notifications"
+        android:name="com.soongsil.pilatime.ui.notifications.NotificationsFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_notifications" />
+</navigation>
