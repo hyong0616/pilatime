@@ -16,21 +16,8 @@ import com.soongsil.pilatime.R;
 
 public class MemberFragment extends Fragment {
 
-    private MemberViewModel memberViewModel;
-
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        memberViewModel =
-                ViewModelProviders.of(this).get(MemberViewModel.class);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_member, container, false);
-        final TextView textView = root.findViewById(R.id.text_member);
-        memberViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-
-                textView.setText(s);
-            }
-        });
         return root;
     }
 }

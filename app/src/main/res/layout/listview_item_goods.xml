@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="수업 이름"
+            android:id="@+id/textView1"
+            android:textSize="24dp"
+            android:textColor="#000000"
+            android:gravity="center_vertical"
+            android:layout_weight="2"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="현재 수강 인원 / 전체 수강 인원"
+            android:id="@+id/textView2"
+            android:textSize="16dp"
+            android:textColor="#666666"
+            android:textAlignment="textEnd"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+
+     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="시간 : 00:00~00:00"
+        android:id="@+id/textView3"
+        android:textSize="16dp"
+        android:textColor="#666666"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="정원 : 00명"
+        android:id="@+id/textView4"
+        android:textSize="16dp"
+        android:textColor="#666666"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="구성 : 00회(00주)"
+        android:id="@+id/textView5"
+        android:textSize="16dp"
+        android:textColor="#666666"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="가격 : 1,000,000W"
+        android:id="@+id/textView6"
+        android:textSize="16dp"
+        android:textColor="#666666"/>
+
+</LinearLayout>
