@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -19,6 +20,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.soongsil.pilatime.ClassContent;
+import com.soongsil.pilatime.ClassContentAdapter;
 import com.soongsil.pilatime.R;
 
 import java.text.SimpleDateFormat;
@@ -30,7 +33,6 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class CalendarFragment extends Fragment {
 
-    private CalendarViewModel calendarViewModel;
     public CalendarView calendarView;
     public TextView dateTextView, contentTextView;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -71,6 +73,19 @@ public class CalendarFragment extends Fragment {
 
 
         });
+
+        ListView listView;
+        ClassContentAdapter classContentAdapter = new ClassContentAdapter();
+
+        listView = (ListView) view.findViewById(R.id.list_view);
+        listView.setAdapter(classContentAdapter);
+
+        classContentAdapter.addItem("클래스 A", "브릿지 15회 2세트 \n OOO동작 OO몇회 세트");
+        classContentAdapter.addItem("클래스 B", "브릿지 10회 3세트 \n OOO동작 OO몇회 세트");
+        classContentAdapter.addItem("클래스 C", "브릿지 10회 3세트 \n OOO동작 OO몇회 세트");
+        classContentAdapter.addItem("클래스 A", "브릿지 15회 2세트 \n OOO동작 OO몇회 세트");
+        classContentAdapter.addItem("클래스 B", "브릿지 10회 3세트 \n OOO동작 OO몇회 세트");
+        classContentAdapter.addItem("클래스 C", "브릿지 10회 3세트 \n OOO동작 OO몇회 세트");
 
         return view;
     }
