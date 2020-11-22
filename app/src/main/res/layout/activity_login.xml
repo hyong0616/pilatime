@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/AppTheme.NoActionBar"
+    tools:context=".LoginActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="57dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="80dp"
+            android:text="Login"
+            android:textColor="#000000"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="105dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:background="#00FFFFFF"
+            android:src="@drawable/logo" />
+
+        <EditText
+            android:id="@+id/idText"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:background="@color/colorPrimary"
+            android:drawableStart="@drawable/ic_person_black_24dp"
+            android:drawableLeft="@drawable/ic_person_black_24dp"
+            android:hint="Write your ID"
+            android:padding="10dp"
+            android:textColor="#000000"
+            android:textColorHint="#000000" />
+
+        <EditText
+            android:id="@+id/passwordText"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorPrimary"
+            android:drawableStart="@drawable/ic_https_black_24dp"
+            android:drawableLeft="@drawable/ic_https_black_24dp"
+            android:hint="Write your Password"
+            android:inputType="textPassword"
+            android:padding="10dp"
+            android:textColor="#000000"
+            android:textColorHint="#000000" />
+
+        <Button
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorPrimaryDark"
+            android:text="Login"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:onClick="loginClick"
+            android:id="@+id/loginButton"/>
+
+        <TextView
+            android:id="@+id/registerButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="Don't have account? Click here"
+            android:textSize="18dp" />
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>
