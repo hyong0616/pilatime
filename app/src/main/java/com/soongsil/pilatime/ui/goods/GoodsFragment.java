@@ -2,6 +2,8 @@ package com.soongsil.pilatime.ui.goods;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -32,7 +34,15 @@ public class GoodsFragment extends Fragment {
         goodsAdapter.addItem("월/수 B Class","현재 2명/6명", "시간 : 14:00~15:00","정원 : 6명", "구성 : 20회(10주)", "200,000w");
         goodsAdapter.addItem("월/수/금 C Class","현재 6명/10명", "시간 : 10:00~11:00","정원 : 10명", "구성 : 30회(10주)", "400,000w");
 
+        setHasOptionsMenu(true);
 
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_list, menu);
+
     }
 }
