@@ -17,10 +17,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+
+import java.util.Map;
 
 public class RegisterCenterActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private EditText idText, passwordText, center_nameText, center_addressText, center_numberText;
     private Button center_registerButton;
 
@@ -71,6 +76,11 @@ public class RegisterCenterActivity extends AppCompatActivity {
             center_numberText.requestFocus();
             return;
         }
+
+        /*Firebase Cloud Firestore*/
+        Center center = new Center(center_nameText.getText().toString(), idText.getText().toString(), center_addressText.getText().toString(), center_numberText.getText().toString());
+        db.collection("centers").document(center_nameText.getText().toString()).set(center);
+
 
         /*Firebase Authentication Signin*/
         String email = idText.getText().toString();
