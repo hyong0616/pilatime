@@ -1,4 +1,4 @@
-package com.soongsil.pilatime;
+package com.soongsil.pilatime.member;
 
 public class Member {
     private String email;

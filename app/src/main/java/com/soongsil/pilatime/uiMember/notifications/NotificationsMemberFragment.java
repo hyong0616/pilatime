@@ -1,4 +1,4 @@
-package com.soongsil.pilatime.ui.notifications;
+package com.soongsil.pilatime.uiMember.notifications;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,23 +7,28 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
+import com.soongsil.pilatime.center.Notifications;
 import com.soongsil.pilatime.center.NotificationsAdapter;
 import com.soongsil.pilatime.R;
 
-public class NotificationsFragment extends Fragment {
+public class NotificationsMemberFragment extends Fragment {
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_notifications, container, false);
+        View view = inflater.inflate(R.layout.fragment_notifications_member, container, false);
 
         ListView listView;
         NotificationsAdapter notificationsAdapter = new NotificationsAdapter();
-        listView = (ListView) view.findViewById(R.id.list_view);
+        listView = (ListView) view.findViewById(R.id.list_view2);
         listView.setAdapter(notificationsAdapter);
 
         notificationsAdapter.addItem("1","2020/11/26", "첫번째 게시물 제목입니다.", "ADMIN");
@@ -37,10 +42,4 @@ public class NotificationsFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_list, menu);
-
-    }
 }

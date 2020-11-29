@@ -1,8 +1,9 @@
-package com.soongsil.pilatime;
+package com.soongsil.pilatime.center;
 
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.soongsil.pilatime.R;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;

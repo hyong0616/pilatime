@@ -1,4 +1,4 @@
-package com.soongsil.pilatime;
+package com.soongsil.pilatime.center;
 
 public class Center {
     private String name;

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+    <LinearLayout
+        android:background="#E8F5FF"
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginBottom="10dp">
+
+        <TextView
+            android:id="@+id/textView_idx2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="번호"
+            android:textSize="15sp"
+            android:textAlignment="center"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/textView_date2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="게시일"
+            android:textSize="15sp"
+            android:textAlignment="center"
+            android:layout_weight="2"/>
+
+        <TextView
+            android:id="@+id/textView_title2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="제목"
+            android:textSize="15sp"
+            android:textAlignment="center"
+            android:layout_weight="5"/>
+
+        <TextView
+            android:id="@+id/textView_writer2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="작성자"
+            android:textSize="15sp"
+            android:textAlignment="center"
+            android:layout_weight="3"/>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/list_view2"
+        android:layout_below="@id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</RelativeLayout>

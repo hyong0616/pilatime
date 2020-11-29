@@ -1,4 +1,4 @@
-package com.soongsil.pilatime;
+package com.soongsil.pilatime.center;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,10 +7,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import com.soongsil.pilatime.R;
 
 import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
 
 public class GoodsAdapter extends BaseAdapter {
 

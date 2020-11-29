@@ -1,4 +1,4 @@
-package com.soongsil.pilatime.ui.goods;
+package com.soongsil.pilatime.uiMember.goods;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,23 +7,27 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.soongsil.pilatime.center.GoodsAdapter;
 import com.soongsil.pilatime.R;
 
-public class GoodsFragment extends Fragment {
+public class GoodsMemberFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_goods, container, false);
+        View view = inflater.inflate(R.layout.fragment_goods_member, container, false);
 
         ListView listView ;
         GoodsAdapter goodsAdapter = new GoodsAdapter();
 
-        listView = (ListView) view.findViewById(R.id.list_view);
+        listView = (ListView) view.findViewById(R.id.list_view2);
         listView.setAdapter(goodsAdapter);
 
         goodsAdapter.addItem("화/목 A Class", "현재 6명/8명","시간 : 14:00~15:00","정원 : 8명", "구성 : 30회(15주)", "350,000w");
@@ -33,12 +37,5 @@ public class GoodsFragment extends Fragment {
         setHasOptionsMenu(true);
 
         return view;
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_list, menu);
-
     }
 }

@@ -1,4 +1,4 @@
-package com.soongsil.pilatime.ui.calendar;
+package com.soongsil.pilatime.uiMember.calendar;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -9,23 +9,29 @@ import android.widget.CalendarView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.soongsil.pilatime.center.ClassContent;
 import com.soongsil.pilatime.center.ClassContentAdapter;
 import com.soongsil.pilatime.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
-public class CalendarFragment extends Fragment {
+public class CalendarMemberFragment extends Fragment {
 
     public CalendarView calendarView;
     public TextView dateTextView, contentTextView;
@@ -38,11 +44,10 @@ public class CalendarFragment extends Fragment {
     String date = mFormat.format(mDate);
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_calendar, container, false);
+        View view = inflater.inflate(R.layout.fragment_calendar_member, container, false);
 
-        calendarView = view.findViewById(R.id.admin_calendar);
-        dateTextView = view.findViewById(R.id.textView_date);
-        contentTextView = view.findViewById(R.id.textView_content);
+        calendarView = view.findViewById(R.id.member_calendar);
+        dateTextView = view.findViewById(R.id.textView_date2);
         dateTextView.setText(date);
 
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -68,6 +73,7 @@ public class CalendarFragment extends Fragment {
 
         });
 
+
         ListView listView;
         ClassContentAdapter classContentAdapter = new ClassContentAdapter();
 
@@ -75,11 +81,8 @@ public class CalendarFragment extends Fragment {
         listView.setAdapter(classContentAdapter);
 
         classContentAdapter.addItem("클래스 A", "브릿지 15회 2세트 \n OOO동작 OO몇회 세트");
-        classContentAdapter.addItem("클래스 B", "브릿지 10회 3세트 \n OOO동작 OO몇회 세트");
-        classContentAdapter.addItem("클래스 C", "브릿지 10회 3세트 \n OOO동작 OO몇회 세트");
-        classContentAdapter.addItem("클래스 A", "브릿지 15회 2세트 \n OOO동작 OO몇회 세트");
-        classContentAdapter.addItem("클래스 B", "브릿지 10회 3세트 \n OOO동작 OO몇회 세트");
-        classContentAdapter.addItem("클래스 C", "브릿지 10회 3세트 \n OOO동작 OO몇회 세트");
+
+
 
         return view;
     }

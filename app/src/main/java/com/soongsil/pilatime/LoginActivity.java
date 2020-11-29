@@ -18,10 +18,18 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.soongsil.pilatime.center.AdminCalendarActivity;
+import com.soongsil.pilatime.member.MemberCalendarActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     EditText idText, passwordText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +56,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void loginClick(View v) {
-        final Intent Adminintent = new Intent(this,AdminCalendarActivity.class);
-        final Intent Memberintent = new Intent(this,AdminCalendarActivity.class); /*Todo List : 회원 Activity로 변경 */
+        final Intent Adminintent = new Intent(this, AdminCalendarActivity.class);
+        final Intent Memberintent = new Intent(this,AdminCalendarActivity.class); /*TODO : 회원 Activity로 변경 */
 
         /*유효성 Check*/
         if (idText.getText().toString().length()==0) {
@@ -74,11 +82,8 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d(TAG,"login Success");
                             FirebaseUser user = mAuth.getCurrentUser();
 
-                            if (adminCheck(email)) {
-                                startActivity(Adminintent);
-                            } else {
-                                startActivity(Memberintent);
-                            }
+                            adminCheck(email);
+
                         } else {
                             Log.w(TAG, "login Failure",task.getException());
                             Toast.makeText(LoginActivity.this, "로그인 실패",Toast.LENGTH_SHORT).show();
@@ -87,9 +92,33 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    /*Todo List : 관리자별, 회원별 분기 처리 */
-    public boolean adminCheck(String id) {
+    /*TODO : 관리자별, 회원별 분기 처리 */
+    public void adminCheck(String id) {
+        final Intent Adminintent = new Intent(this,AdminCalendarActivity.class);
+        final Intent Memberintent = new Intent(this, MemberCalendarActivity.class); /*TODO : 회원 Activity로 변경 */
 
-        return true;
+        CollectionReference centersRef = db.collection("centers");
+        Query query = centersRef.whereEqualTo("email",idText.getText().toString());
+
+        query.get().addOnCompleteListener(this, new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+
+                    /*센터 아이디 목록에 있는 경우에 따른 분기 처리*/
+                    if (!task.getResult().isEmpty()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Log.d(TAG, "센터 로그인 : "+document.getId() + " => " + document.getData());
+                            startActivity(Adminintent);
+                        }
+                    } else {
+                        Log.d(TAG, "회원 로그인 :");
+                        startActivity(Memberintent); //TODO : 기존 Activity 의 내용을 유지할 수 있는지 ?
+                    }
+                } else {
+                    Log.d(TAG,"Error getting Documents");
+                }
+            }
+        });
     }
 }

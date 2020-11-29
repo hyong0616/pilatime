@@ -1,4 +1,4 @@
-package com.soongsil.pilatime;
+package com.soongsil.pilatime.center;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,9 +18,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.SetOptions;
-
-import java.util.Map;
+import com.soongsil.pilatime.R;
 
 public class RegisterCenterActivity extends AppCompatActivity {
 
@@ -48,7 +46,7 @@ public class RegisterCenterActivity extends AppCompatActivity {
     }
 
     public void submitClick(View v) {
-        final Intent intent = new Intent(this,AdminCalendarActivity.class);
+        final Intent intent = new Intent(this, AdminCalendarActivity.class);
 
         /*유효성 Check*/
         if (idText.getText().toString().length()==0) {

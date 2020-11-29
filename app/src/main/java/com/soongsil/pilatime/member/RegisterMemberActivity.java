@@ -1,4 +1,4 @@
-package com.soongsil.pilatime;
+package com.soongsil.pilatime.member;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -17,13 +16,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
-import java.util.Collection;
+import com.soongsil.pilatime.R;
+import com.soongsil.pilatime.center.AdminCalendarActivity;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
@@ -49,7 +47,7 @@ public class RegisterMemberActivity extends AppCompatActivity {
     }
 
     public void submitClick(View v) {
-        final Intent intent = new Intent(this,AdminCalendarActivity.class); /*ToDo List : MemberCalendar로 변경*/
+        final Intent intent = new Intent(this, AdminCalendarActivity.class); /*ToDo List : MemberCalendar로 변경*/
         final Intent mIntent = this.getIntent();
         /*유효성 Check*/
         if (idText.getText().toString().length()==0) {
