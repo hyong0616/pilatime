@@ -7,6 +7,14 @@ public class Notifications {
     private String title;
     private String writer;
 
+    public Notifications() {};
+    public Notifications(String idx, String date, String title, String writer) {
+        this.idx = idx;
+        this.date = date;
+        this.title = title;
+        this.writer = writer;
+    }
+
     public void setIdx(String idx) {
         this.idx = idx;
     }

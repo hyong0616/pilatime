@@ -62,6 +62,8 @@
 
     <ListView
         android:id="@+id/list_view"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10sp"
         android:layout_below="@id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

@@ -8,7 +8,18 @@ public class Goods {
     private String count;
     private String cost;
 
-    public void setName(String name) {
+    public Goods () {}
+
+    public Goods (String name, String status, String time, String capacity, String count, String cost) {
+        this.name = name;
+        this.status = status;
+        this.time = time;
+        this.capacity = capacity;
+        this.count = count;
+        this.cost = cost;
+    }
+
+   public void setName(String name) {
         this.name = name;
     }
 

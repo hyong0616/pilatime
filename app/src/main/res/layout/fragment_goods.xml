@@ -12,6 +12,8 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <ListView
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10sp"
         android:id="@+id/list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

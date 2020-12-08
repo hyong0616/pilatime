@@ -4,7 +4,7 @@
 
     <item
         app:showAsAction="always"
-        android:id="@+id/navigation_calendar"
+        android:id="@+id/menu_add"
         android:icon="@drawable/plusicon"
         android:title="추가" />
 

@@ -4,6 +4,12 @@ public class ClassContent {
     private String name ="";
     private String content = "";
 
+    public ClassContent() {};
+    public ClassContent(String name, String content) {
+        this.name = name;
+        this.content = content;
+    }
+
     public void setName(String name) {
         this.name = name;
     }

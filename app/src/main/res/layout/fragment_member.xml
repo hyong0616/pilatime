@@ -8,21 +8,43 @@
     android:padding="20dp">
 
     <LinearLayout
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/SucButton"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:onClick="successClick"
             android:text="승인 완료 회원"/>
 
         <Button
+            android:id="@+id/WaitButton"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:onClick="waitClick"
             android:text="승인 대기 회원"/>
     </LinearLayout>
+
+    <ListView
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10sp"
+        android:layout_weight="12"
+        android:layout_height="0dp"
+        android:id="@+id/list_view"
+        android:layout_width="match_parent" />
+
+    <Button
+        android:id="@+id/SubmitButton"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#CCCCFF"
+        android:onClick="submitClick"
+        android:text="변경"/>
 
 </LinearLayout>

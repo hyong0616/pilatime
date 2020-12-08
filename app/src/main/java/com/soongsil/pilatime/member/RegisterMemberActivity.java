@@ -47,7 +47,7 @@ public class RegisterMemberActivity extends AppCompatActivity {
     }
 
     public void submitClick(View v) {
-        final Intent intent = new Intent(this, AdminCalendarActivity.class); /*ToDo List : MemberCalendar로 변경*/
+        final Intent intent = new Intent(this, MemberCalendarActivity.class); /*ToDo List : MemberCalendar로 변경*/
         final Intent mIntent = this.getIntent();
         /*유효성 Check*/
         if (idText.getText().toString().length()==0) {
@@ -104,7 +104,7 @@ public class RegisterMemberActivity extends AppCompatActivity {
 
 
         /*Firebase Cloud Firestore*/
-        Member member = new Member(idText.getText().toString(), memberNameText.getText().toString(), numberText.getText().toString());
+        Member member = new Member(idText.getText().toString(), memberNameText.getText().toString(), numberText.getText().toString(),centerNameText.getText().toString());
         db.collection("members").document(centerNameText.getText().toString()).collection("member").document(memberNameText.getText().toString()).set(member);
 
 
