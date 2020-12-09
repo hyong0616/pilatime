@@ -1,10 +1,12 @@
 package com.soongsil.pilatime.ui.calendar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,6 +27,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.soongsil.pilatime.center.AddContextActivity;
 import com.soongsil.pilatime.center.ClassContent;
 import com.soongsil.pilatime.center.ClassContentAdapter;
 import com.soongsil.pilatime.R;
@@ -43,6 +46,7 @@ public class CalendarFragment extends Fragment {
     public CalendarView calendarView;
     public TextView dateTextView, contentTextView;
     public ListView listView;
+    public Button addButton;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -58,6 +62,7 @@ public class CalendarFragment extends Fragment {
         calendarView = view.findViewById(R.id.admin_calendar);
         dateTextView = view.findViewById(R.id.textView_date);
         contentTextView = view.findViewById(R.id.textView_content);
+        addButton = view.findViewById(R.id.btn_add);
         /*현재 날짜로 setting*/
         dateTextView.setText(date);
 
@@ -160,6 +165,20 @@ public class CalendarFragment extends Fragment {
                 });
             }
         });
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                /* 데이터 추가
+                Goods goods_1 = new Goods("화 목 A Class", "현재 : 6명","시간 : 14:00~15:00","정원 : 8명", "구성 : 30회(15주)", "350,000w");
+                db.collection("goods").document(myname).collection("good").document(goods_1.getName()).set(goods_1);
+                */
+                Intent intent = new Intent(getActivity(), AddContextActivity.class);
+                startActivity(intent);
+            }
+        });
+        ;
 
         return view;
     }

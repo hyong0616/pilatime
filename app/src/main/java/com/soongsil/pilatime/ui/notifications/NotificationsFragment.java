@@ -1,5 +1,6 @@
 package com.soongsil.pilatime.ui.notifications;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.soongsil.pilatime.center.AddNotificationActivity;
 import com.soongsil.pilatime.center.Notifications;
 import com.soongsil.pilatime.center.NotificationsAdapter;
 import com.soongsil.pilatime.R;
@@ -84,10 +86,12 @@ public class NotificationsFragment extends Fragment {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     if (!task.getResult().isEmpty()) {
+                        int idx = 1;
                         for (QueryDocumentSnapshot document : task.getResult()) {
-                            notificationsAdapter.addItem(document.getData().get("idx").toString(), document.getData().get("date").toString()
+                            notificationsAdapter.addItem(Integer.toString(idx), document.getData().get("date").toString()
                                     ,document.getData().get("title").toString(), document.getData().get("writer").toString());
                             Log.d(TAG, document.getId() + " => " + document.getData());
+                            idx ++;
                         }
                     } else {
                         Log.d(TAG, "Error center Name", task.getException());
@@ -120,8 +124,10 @@ public class NotificationsFragment extends Fragment {
                 Notifications notifications2 = new Notifications("2","2020/11/26", "두번째 게시물 제목입니다.", "ADMIN");
                 db.collection("notifications").document(myname).collection("notification").document().set(notifications2);
                 */
-                Toast.makeText(getActivity(), "추가버튼 클릭",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), AddNotificationActivity.class);
+                startActivity(intent);
                 return true;
+
             default:
                 break;
         }

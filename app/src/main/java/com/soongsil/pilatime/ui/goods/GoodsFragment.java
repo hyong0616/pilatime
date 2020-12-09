@@ -26,6 +26,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.soongsil.pilatime.LoginActivity;
+import com.soongsil.pilatime.center.AddGoodsActivity;
 import com.soongsil.pilatime.center.AdminCalendarActivity;
 import com.soongsil.pilatime.center.Goods;
 import com.soongsil.pilatime.center.GoodsAdapter;
@@ -121,12 +122,13 @@ public class GoodsFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.menu_add:
 
+                Intent intent = new Intent(getActivity(), AddGoodsActivity.class);
+                startActivity(intent);
                 /* 데이터 추가
                 Goods goods_1 = new Goods("화 목 A Class", "현재 : 6명","시간 : 14:00~15:00","정원 : 8명", "구성 : 30회(15주)", "350,000w");
                 db.collection("goods").document(myname).collection("good").document(goods_1.getName()).set(goods_1);
                 */
 
-                Toast.makeText(getActivity(), "추가버튼 클릭",Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 break;

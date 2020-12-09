@@ -33,6 +33,8 @@ public class RegisterCenterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_center);
 
+
+
         idText = (EditText) findViewById(R.id.idText);
         passwordText = (EditText) findViewById(R.id.passwordText);
         center_nameText = (EditText) findViewById(R.id.centernameText);
