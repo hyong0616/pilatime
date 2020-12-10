@@ -52,9 +52,8 @@ public class CalendarFragment extends Fragment {
 
     //현재 날짜
     long now = System.currentTimeMillis();
-    Date mDate = new Date(now);
-    SimpleDateFormat mFormat = new SimpleDateFormat("yyyy.MM.dd");
-    String date = mFormat.format(mDate);
+    SimpleDateFormat mFormat = new SimpleDateFormat("yyyy/MM/dd");
+    String date = mFormat.format(new Date());
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
@@ -131,8 +130,8 @@ public class CalendarFragment extends Fragment {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
 
-                String nowDate = String.format("%d.%d.%d",year,month+1,dayOfMonth);
-                dateTextView.setText(String.format("%d.%d.%d",year,month+1,dayOfMonth));
+                String nowDate = String.format("%04d.%02d.%02d",year,month+1,dayOfMonth);
+                dateTextView.setText(String.format("%04d.%02d.%02d",year,month+1,dayOfMonth));
                 dateTextView.setVisibility(View.VISIBLE);
                 final ClassContentAdapter dateContentAdapter = new ClassContentAdapter();
 

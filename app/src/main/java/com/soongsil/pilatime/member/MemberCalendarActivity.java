@@ -27,6 +27,8 @@ public class MemberCalendarActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_member_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView2, navController);
+
+
     }
 
 }

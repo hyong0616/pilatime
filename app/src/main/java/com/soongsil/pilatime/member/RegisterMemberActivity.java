@@ -78,8 +78,6 @@ public class RegisterMemberActivity extends AppCompatActivity {
         /*센터의 경우 Database에서 존재하는 센터인지 검색*/
         CollectionReference centersRef = db.collection("centers");
         Query query = centersRef.whereEqualTo("name",centerNameText.getText().toString());
-
-
         query.get().addOnCompleteListener(this,new OnCompleteListener<QuerySnapshot>() {
 
             @Override
@@ -102,10 +100,9 @@ public class RegisterMemberActivity extends AppCompatActivity {
         });
 
 
-
         /*Firebase Cloud Firestore*/
         Member member = new Member(idText.getText().toString(), memberNameText.getText().toString(), numberText.getText().toString(),centerNameText.getText().toString());
-        db.collection("members").document(centerNameText.getText().toString()).collection("member").document(memberNameText.getText().toString()).set(member);
+        db.collection("members").document(idText.getText().toString()).set(member);
 
 
         /*Firebase Authentication Signin*/

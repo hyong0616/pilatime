@@ -97,7 +97,7 @@ public class AddContextActivity extends AppCompatActivity {
                 long now = System.currentTimeMillis();
                 Date mDate = new Date(now);
                 SimpleDateFormat mFormat = new SimpleDateFormat("yyyy.MM.dd");
-                String date = mFormat.format(mDate);
+                String date = mFormat.format(new Date());
 
                 /*데이터 넣기
                  * contents/센터이름/2020.11.17/클래스이름/클래스 내용
