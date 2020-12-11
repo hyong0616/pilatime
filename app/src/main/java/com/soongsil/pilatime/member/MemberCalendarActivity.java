@@ -28,7 +28,21 @@ public class MemberCalendarActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView2, navController);
 
-
+        /*특정 fragment로 이동하는 intent filter*/
+        String str = getIntent().getStringExtra("particularFragment");
+        if(str !=null)
+        {
+            if (str.equals("classManage"))
+            {
+                navController.navigate(R.id.action_navigation_calendar_member_to_navigation_classManage);
+            } else if (str.equals("notification"))
+            {
+                navController.navigate(R.id.action_navigation_calendar_member_to_navigation_notifications_member);
+            } else if (str.equals("good"))
+            {
+                navController.navigate(R.id.action_navigation_calendar_member_to_navigation_goods_member);
+            }
+        }
     }
 
 }

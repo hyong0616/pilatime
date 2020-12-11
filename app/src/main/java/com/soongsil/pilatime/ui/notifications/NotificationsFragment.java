@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -26,7 +25,6 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.soongsil.pilatime.center.AddNotificationActivity;
-import com.soongsil.pilatime.center.Notifications;
 import com.soongsil.pilatime.center.NotificationsAdapter;
 import com.soongsil.pilatime.R;
 
@@ -38,7 +36,7 @@ public class NotificationsFragment extends Fragment {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    String myname;
+    String centerName;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -75,7 +73,6 @@ public class NotificationsFragment extends Fragment {
         }
         List<DocumentSnapshot> document = querySnapshotTask.getResult().getDocuments();
         final String centerName = document.get(0).getData().get("name").toString();
-        myname = centerName;
         /*공지사항 목록 가져오기
         *
         * 공지사항 > 센터 > 게시글고유번호 > 게시글

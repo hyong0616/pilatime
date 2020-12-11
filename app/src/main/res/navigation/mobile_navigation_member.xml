@@ -9,7 +9,17 @@
         android:id="@+id/navigation_calendar_member"
         android:name="com.soongsil.pilatime.uiMember.calendar.CalendarMemberFragment"
         android:label="@string/title_calendar_member"
-        tools:layout="@layout/fragment_calendar_member" />
+        tools:layout="@layout/fragment_calendar_member" >
+        <action
+            android:id="@+id/action_navigation_calendar_member_to_navigation_classManage"
+            app:destination="@id/navigation_classManage" />
+        <action
+            android:id="@+id/action_navigation_calendar_member_to_navigation_goods_member"
+            app:destination="@id/navigation_goods_member" />
+        <action
+            android:id="@+id/action_navigation_calendar_member_to_navigation_notifications_member"
+            app:destination="@id/navigation_notifications_member" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_classManage"
