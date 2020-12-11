@@ -8,7 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
@@ -39,26 +41,21 @@ public class MemberFragment extends Fragment {
 
     public Button sucButton, waitButton, submitButton;
     public ListView listView;
-    String myname;
+    public TextView textView_change;
+    String centerName;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_member, container, false);
-        final MembersAdapter membersAdapter = new MembersAdapter();
         sucButton = view.findViewById(R.id.SucButton);
         waitButton = view.findViewById(R.id.WaitButton);
         submitButton = view.findViewById(R.id.SubmitButton);
         listView = view.findViewById(R.id.list_view);
 
-        /*초기는 승인 완료된 회원*/
-        sucButton.setBackgroundColor(Color.parseColor("#CCCCFF"));
-        waitButton.setBackgroundColor(Color.parseColor("#FFFFFF"));
-        submitButton.setVisibility(view.INVISIBLE);
+        /*버튼 눌릴때마다 변경되는 textView*/
+        textView_change = view.findViewById(R.id.textView_change);
 
-        /*승인 완료된 회원 먼저 가져오기*/
-
-        /*센터이름 가져오기*/
         /*센터 이름 가져오기*/
         String email = user.getEmail();
         final CollectionReference docRef = db.collection("centers");
@@ -85,30 +82,65 @@ public class MemberFragment extends Fragment {
             Log.d(TAG, "Not yet");
         }
         List<DocumentSnapshot> document = querySnapshotTask.getResult().getDocuments();
-        final String centerName = document.get(0).getData().get("name").toString();
-        myname = centerName;
+        centerName = document.get(0).getData().get("name").toString();
 
+        /*초기의 경우는 승인 완료 회원 가져오기*/
+        sucButton.setBackgroundColor(Color.parseColor("#CCCCFF"));
+        final MembersAdapter initAdapter = new MembersAdapter();
+
+        /*TODO Y N 쿼리에 따른 분기처리
+        *
+        * /members/센터1/member/mem1@pila.com
+        * */
+        CollectionReference conRef = db.collection("members")
+                .document(centerName).collection("member");
+
+        conRef.whereEqualTo("ack","Y").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    if (!task.getResult().isEmpty()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            initAdapter.addItem(document.getData().get("name").toString(), document.getData().get("className").toString(),
+                                    Integer.parseInt(document.getData().get("classRemain").toString()));
+                            Log.d(TAG, document.getId() + " => " + document.getData());
+                        }
+                    } else {
+                        Log.d(TAG, "No Data in init Query", task.getException());
+                    }
+                    initAdapter.notifyDataSetChanged();
+                    listView.setAdapter(initAdapter);
+                } else {
+                    Log.d(TAG,"Error getting Documents");
+                }
+            }
+        });
+
+        /*해당하는 센터의 회원 가져오기*/
         sucButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final MembersAdapter membersAdapter = new MembersAdapter();
                 sucButton.setBackgroundColor(Color.parseColor("#CCCCFF"));
                 waitButton.setBackgroundColor(Color.parseColor("#FFFFFF"));
                 submitButton.setVisibility(view.INVISIBLE);
+                textView_change.setText("출석");
 
-                /*해당하는 센터의 회원 가져오기*/
-                CollectionReference conRef = db.collection("members").document(centerName).collection("member");
-                /*TODO Y N 쿼리에 따른 분기처리*/
-                conRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                CollectionReference conRef = db.collection("members")
+                        .document(centerName).collection("member");
+
+                conRef.whereEqualTo("ack","Y").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             if (!task.getResult().isEmpty()) {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
-                                    membersAdapter.addItem(document.getData().get("name").toString(), document.getData().get("email").toString());
+                                    membersAdapter.addItem(document.getData().get("name").toString(), document.getData().get("className").toString(),
+                                            Integer.parseInt(document.getData().get("classRemain").toString()));
                                     Log.d(TAG, document.getId() + " => " + document.getData());
                                 }
                             } else {
-                                Log.d(TAG, "Error center Name", task.getException());
+                                Log.d(TAG, "No Data in init Query", task.getException());
                             }
                             membersAdapter.notifyDataSetChanged();
                             listView.setAdapter(membersAdapter);
@@ -117,18 +149,41 @@ public class MemberFragment extends Fragment {
                         }
                     }
                 });
-
             }
         });
 
         waitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final MembersAdapter waitAdapter = new MembersAdapter();
                 submitButton.setVisibility(view.VISIBLE);
                 sucButton.setBackgroundColor(Color.parseColor("#FFFFFF"));
                 waitButton.setBackgroundColor(Color.parseColor("#CCCCFF"));
+                textView_change.setText("승인");
 
+                CollectionReference conRef = db.collection("members")
+                        .document(centerName).collection("member");
 
+                conRef.whereEqualTo("ack","N").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            if (!task.getResult().isEmpty()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    waitAdapter.addItem(document.getData().get("name").toString(), document.getData().get("className").toString(),
+                                            Integer.parseInt(document.getData().get("classRemain").toString()));
+                                    Log.d(TAG, document.getId() + " => " + document.getData());
+                                }
+                            } else {
+                                Log.d(TAG, "No Data in init Query", task.getException());
+                            }
+                            waitAdapter.notifyDataSetChanged();
+                            listView.setAdapter(waitAdapter);
+                        } else {
+                            Log.d(TAG,"Error getting Documents");
+                        }
+                    }
+                });
 
             }
         });

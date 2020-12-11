@@ -30,11 +30,74 @@
             android:text="승인 대기 회원"/>
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_marginTop = "10dp"
+        android:background="#E8F5FF"
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView_idx"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="이름"
+            android:textSize="15sp"
+            android:textAlignment="center"
+            android:layout_weight="3"/>
+        <View
+            android:layout_width="0.3dp"
+            android:layout_height="match_parent"
+            android:background="#4682B4" />
+
+        <TextView
+            android:id="@+id/textView_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="상품명"
+            android:textSize="15sp"
+            android:textAlignment="center"
+            android:layout_weight="3"/>
+        <View
+            android:layout_width="0.3dp"
+            android:layout_height="match_parent"
+            android:background="#4682B4" />
+
+        <TextView
+            android:id="@+id/textView_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="잔여기간"
+            android:textSize="15sp"
+            android:textAlignment="center"
+            android:layout_weight="4"/>
+        <View
+            android:layout_width="0.3dp"
+            android:layout_height="match_parent"
+            android:background="#4682B4" />
+
+        <TextView
+            android:id="@+id/textView_change"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="출석"
+            android:textSize="15sp"
+            android:textAlignment="center"
+            android:layout_weight="3"/>
+    </LinearLayout>
+
     <ListView
         android:divider="@android:color/transparent"
         android:dividerHeight="10sp"
         android:layout_weight="12"
         android:layout_height="0dp"
+        android:choiceMode="multipleChoice"
         android:id="@+id/list_view"
         android:layout_width="match_parent" />
 

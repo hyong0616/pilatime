@@ -44,20 +44,23 @@ public class MembersAdapter extends BaseAdapter {
         }
 
         TextView nameTextView = (TextView) convertView.findViewById(R.id.textViewName);
-        TextView emailTextView = (TextView) convertView.findViewById(R.id.textViewEmail);
+        TextView goodsTextView = (TextView) convertView.findViewById(R.id.textViewGoods);
+        TextView remainTextView = (TextView) convertView.findViewById(R.id.textViewRemain);
 
         Members members = membersArrayList.get(position);
         nameTextView.setText(members.getName());
-        emailTextView.setText(members.getEmail());
+        goodsTextView.setText(members.getGoods());
+        remainTextView.setText(Integer.toString(members.getRemain())+'일');
 
         return convertView;
     }
 
-    public void addItem(String name, String email) {
+    public void addItem(String name, String goods, int remain) {
         Members members = new Members();
 
         members.setName(name);
-        members.setEmail(email);
+        members.setGoods(goods);
+        members.setRemain(remain);
 
         membersArrayList.add(members);
     }

@@ -52,7 +52,7 @@ public class CalendarFragment extends Fragment {
 
     //현재 날짜
     long now = System.currentTimeMillis();
-    SimpleDateFormat mFormat = new SimpleDateFormat("yyyy/MM/dd");
+    SimpleDateFormat mFormat = new SimpleDateFormat("yyyy.MM.dd");
     String date = mFormat.format(new Date());
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
