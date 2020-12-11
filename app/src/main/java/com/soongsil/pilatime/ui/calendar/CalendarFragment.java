@@ -44,7 +44,7 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 public class CalendarFragment extends Fragment {
 
     public CalendarView calendarView;
-    public TextView dateTextView, contentTextView;
+    public TextView contentTextView;
     public ListView listView;
     public Button addButton;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -59,11 +59,9 @@ public class CalendarFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
 
         calendarView = view.findViewById(R.id.admin_calendar);
-        dateTextView = view.findViewById(R.id.textView_date);
         contentTextView = view.findViewById(R.id.textView_content);
         addButton = view.findViewById(R.id.btn_add);
         /*현재 날짜로 setting*/
-        dateTextView.setText(date);
 
         /*Adapter setting*/
         final ClassContentAdapter classContentAdapter = new ClassContentAdapter();
@@ -90,7 +88,6 @@ public class CalendarFragment extends Fragment {
                 }
             }
         });
-
         //TODO : Task Await 로 변경
         while(!querySnapshotTask.isComplete()) {
             Log.d(TAG, "Not yet");
@@ -131,8 +128,6 @@ public class CalendarFragment extends Fragment {
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
 
                 String nowDate = String.format("%04d.%02d.%02d",year,month+1,dayOfMonth);
-                dateTextView.setText(String.format("%04d.%02d.%02d",year,month+1,dayOfMonth));
-                dateTextView.setVisibility(View.VISIBLE);
                 final ClassContentAdapter dateContentAdapter = new ClassContentAdapter();
 
                 /*

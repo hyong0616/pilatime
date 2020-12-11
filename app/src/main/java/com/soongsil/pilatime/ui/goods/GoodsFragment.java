@@ -40,7 +40,7 @@ public class GoodsFragment extends Fragment {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    String myname;
+    String centerName;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -77,7 +77,6 @@ public class GoodsFragment extends Fragment {
         }
         List<DocumentSnapshot> document = querySnapshotTask.getResult().getDocuments();
         final String centerName = document.get(0).getData().get("name").toString();
-        myname = centerName;
         /*상품 목록 가져오기
          *
          * 상품들 > 센터 > 상품명 > 상품
@@ -105,7 +104,6 @@ public class GoodsFragment extends Fragment {
             }
         });
 
-        listView.setAdapter(goodsAdapter);
         setHasOptionsMenu(true);
         return view;
     }

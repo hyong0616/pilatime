@@ -41,8 +41,9 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 public class CalendarMemberFragment extends Fragment {
 
     public CalendarView calendarView;
-    public TextView dateTextView, contentTextView;
     public ListView listView;
+    String centerName;
+    String className;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -57,9 +58,7 @@ public class CalendarMemberFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_calendar_member, container, false);
 
         calendarView = view.findViewById(R.id.member_calendar);
-        dateTextView = view.findViewById(R.id.textView_date2);
         /*현재 날짜로 setting*/
-        dateTextView.setText(date);
 
         /*Adapter setting*/
         final ClassContentAdapter classContentAdapter = new ClassContentAdapter();
@@ -91,8 +90,38 @@ public class CalendarMemberFragment extends Fragment {
             Log.d(TAG, "Not yet");
         }
         List<DocumentSnapshot> document = querySnapshotTask.getResult().getDocuments();
-        final String centerName = document.get(0).getData().get("centerName").toString();
-        final String className = document.get(0).getData().get("className").toString();
+        centerName = document.get(0).getData().get("centerName").toString();
+        Log.d(TAG, "CENTERNAME : "+centerName );
+
+
+        /*수업 이름 가져오기*/
+        CollectionReference conRef = db.collection("members")
+                .document(centerName).collection("member");
+        Query query2 = conRef.whereEqualTo("email",email);
+        Task<QuerySnapshot> querySnapshotTask2
+                = query2.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    if (!task.getResult().isEmpty()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Log.d(TAG, document.getId() + " => " + document.getData());
+                        }
+                    } else {
+                        Log.d(TAG, "No Data in init Query", task.getException());
+                    }
+                } else {
+                    Log.d(TAG,"Error getting Documents");
+                }
+            }
+        });
+        //TODO : Task Await 로 변경
+        while(!querySnapshotTask2.isComplete()) {
+            Log.d(TAG, "Not yet");
+        }
+        List<DocumentSnapshot> document2 = querySnapshotTask2.getResult().getDocuments();
+        className = document2.get(0).getData().get("className").toString();
+
 
         /*초기 날짜로 가져오기
         *
@@ -132,8 +161,6 @@ public class CalendarMemberFragment extends Fragment {
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
 
                 String nowDate = String.format("%04d.%02d.%02d",year,month+1,dayOfMonth);
-                dateTextView.setText(String.format("%04d.%02d.%02d",year,month+1,dayOfMonth));
-                dateTextView.setVisibility(View.VISIBLE);
                 final ClassContentAdapter dateContentAdapter = new ClassContentAdapter();
 
                 if (!className.equals("")) {

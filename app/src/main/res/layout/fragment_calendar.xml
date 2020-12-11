@@ -13,20 +13,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <TextView
-        android:id="@+id/textView_date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:text="yyyy/mm/dd"
-        android:textAlignment="center"/>
-
     <View
         android:background="#999999"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginTop = "5dp"
-        android:layout_marginBottom="5dp"/>
+        android:layout_height="0.1dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -54,9 +44,7 @@
     <View
         android:background="#999999"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop = "10dp"
-        android:layout_marginBottom="10dp"/>
+        android:layout_height="0.1dp"/>
 
     <ListView
         android:divider="@android:color/transparent"
