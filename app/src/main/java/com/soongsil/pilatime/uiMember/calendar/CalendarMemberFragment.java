@@ -67,7 +67,7 @@ public class CalendarMemberFragment extends Fragment {
 
         /*센터 이름 가져오기*/
         String email = user.getEmail();
-        final CollectionReference docRef = db.collection("members");
+        final CollectionReference docRef = db.collection("member");
         Query query = docRef.whereEqualTo("email",email);
         Task<QuerySnapshot> querySnapshotTask
                 = query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

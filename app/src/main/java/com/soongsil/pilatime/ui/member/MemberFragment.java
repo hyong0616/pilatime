@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +20,13 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -30,6 +34,9 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.soongsil.pilatime.R;
 import com.soongsil.pilatime.SignupActivity;
+import com.soongsil.pilatime.center.AddGoodsActivity;
+import com.soongsil.pilatime.center.AdminCalendarActivity;
+import com.soongsil.pilatime.center.Members;
 import com.soongsil.pilatime.center.MembersAdapter;
 import com.soongsil.pilatime.member.RegisterMemberActivity;
 
@@ -45,6 +52,8 @@ public class MemberFragment extends Fragment {
     String centerName;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+    public MembersAdapter membersAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_member, container, false);
@@ -86,7 +95,7 @@ public class MemberFragment extends Fragment {
 
         /*초기의 경우는 승인 완료 회원 가져오기*/
         sucButton.setBackgroundColor(Color.parseColor("#CCCCFF"));
-        final MembersAdapter initAdapter = new MembersAdapter();
+        membersAdapter = new MembersAdapter();
 
         /*TODO Y N 쿼리에 따른 분기처리
         *
@@ -94,22 +103,21 @@ public class MemberFragment extends Fragment {
         * */
         CollectionReference conRef = db.collection("members")
                 .document(centerName).collection("member");
-
         conRef.whereEqualTo("ack","Y").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     if (!task.getResult().isEmpty()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
-                            initAdapter.addItem(document.getData().get("name").toString(), document.getData().get("className").toString(),
+                            membersAdapter.addItem(document.getData().get("name").toString(), document.getData().get("email").toString(),document.getData().get("className").toString(),
                                     Integer.parseInt(document.getData().get("classRemain").toString()));
                             Log.d(TAG, document.getId() + " => " + document.getData());
                         }
                     } else {
                         Log.d(TAG, "No Data in init Query", task.getException());
                     }
-                    initAdapter.notifyDataSetChanged();
-                    listView.setAdapter(initAdapter);
+                    membersAdapter.notifyDataSetChanged();
+                    listView.setAdapter(membersAdapter);
                 } else {
                     Log.d(TAG,"Error getting Documents");
                 }
@@ -120,22 +128,21 @@ public class MemberFragment extends Fragment {
         sucButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final MembersAdapter membersAdapter = new MembersAdapter();
+                membersAdapter = new MembersAdapter();
                 sucButton.setBackgroundColor(Color.parseColor("#CCCCFF"));
                 waitButton.setBackgroundColor(Color.parseColor("#FFFFFF"));
-                submitButton.setVisibility(view.INVISIBLE);
-                textView_change.setText("출석");
+                submitButton.setText("출석");
 
+                /*해당하는 센터의 회원 가져오기*/
                 CollectionReference conRef = db.collection("members")
                         .document(centerName).collection("member");
-
                 conRef.whereEqualTo("ack","Y").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             if (!task.getResult().isEmpty()) {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
-                                    membersAdapter.addItem(document.getData().get("name").toString(), document.getData().get("className").toString(),
+                                    membersAdapter.addItem(document.getData().get("name").toString(), document.getData().get("email").toString(),document.getData().get("className").toString(),
                                             Integer.parseInt(document.getData().get("classRemain").toString()));
                                     Log.d(TAG, document.getId() + " => " + document.getData());
                                 }
@@ -155,42 +162,109 @@ public class MemberFragment extends Fragment {
         waitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final MembersAdapter waitAdapter = new MembersAdapter();
-                submitButton.setVisibility(view.VISIBLE);
+                membersAdapter = new MembersAdapter();
+
                 sucButton.setBackgroundColor(Color.parseColor("#FFFFFF"));
                 waitButton.setBackgroundColor(Color.parseColor("#CCCCFF"));
-                textView_change.setText("승인");
+                submitButton.setText("승인");
 
+
+                /*해당하는 센터의 회원 가져오기*/
                 CollectionReference conRef = db.collection("members")
                         .document(centerName).collection("member");
-
                 conRef.whereEqualTo("ack","N").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             if (!task.getResult().isEmpty()) {
                                 for (QueryDocumentSnapshot document : task.getResult()) {
-                                    waitAdapter.addItem(document.getData().get("name").toString(), document.getData().get("className").toString(),
+                                    membersAdapter.addItem(document.getData().get("name").toString(),document.getData().get("email").toString(), document.getData().get("className").toString(),
                                             Integer.parseInt(document.getData().get("classRemain").toString()));
                                     Log.d(TAG, document.getId() + " => " + document.getData());
                                 }
                             } else {
                                 Log.d(TAG, "No Data in init Query", task.getException());
                             }
-                            waitAdapter.notifyDataSetChanged();
-                            listView.setAdapter(waitAdapter);
+                            membersAdapter.notifyDataSetChanged();
+                            listView.setAdapter(membersAdapter);
                         } else {
                             Log.d(TAG,"Error getting Documents");
                         }
                     }
                 });
-
             }
         });
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SparseBooleanArray checkedItems = listView.getCheckedItemPositions();
+                int count = membersAdapter.getCount();
+                String btnText = submitButton.getText().toString();
+
+                /*출석일 경우에는 잔여횟수 감소 시키기 */
+                if (btnText.equals("출석")) {
+                    for (int i = count-1; i>=0; i--) {
+                        //선택된 항목인 경우
+                        if (checkedItems.get(i)) {
+                            Members nowMember = new Members();
+                            nowMember = membersAdapter.getItem(i);
+
+                            DocumentReference docRef =  db.collection("members")
+                                    .document(centerName).collection("member").document(nowMember.getEmail());
+
+                            docRef.update("classRemain", nowMember.getRemain()-1)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Log.d(TAG, "출석 버튼 : DocumentSnapshot successfully updated!");
+
+                                            Intent intent = new Intent(getActivity(), AdminCalendarActivity.class);
+                                            intent.putExtra("particularFragment","member");
+                                            startActivity(intent);
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.w(TAG, "출석 버튼 : Error updating document", e);
+                                        }
+                                    });
+                        }
+                    }
+                }
+
+                /*승인처리하기*/
+                else {
+                    for (int i = count-1; i>=0; i--) {
+                        //선택된 항목인 경우
+                        if (checkedItems.get(i)) {
+                            Members nowMember = new Members();
+                            nowMember = membersAdapter.getItem(i);
+
+                            DocumentReference docRef =  db.collection("members")
+                                    .document(centerName).collection("member").document(nowMember.getEmail());
+
+                            docRef.update("ack", "Y")
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Log.d(TAG, "승인 버튼 : DocumentSnapshot successfully updated!");
+
+                                            Intent intent = new Intent(getActivity(), AdminCalendarActivity.class);
+                                            intent.putExtra("particularFragment","member");
+                                            startActivity(intent);
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.w(TAG, "승인 버튼 : Error updating document", e);
+                                        }
+                                    });
+                        }
+                    }
+                }
 
             }
         });

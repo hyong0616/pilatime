@@ -50,15 +50,16 @@ public class MembersAdapter extends BaseAdapter {
         Members members = membersArrayList.get(position);
         nameTextView.setText(members.getName());
         goodsTextView.setText(members.getGoods());
-        remainTextView.setText(Integer.toString(members.getRemain())+'일');
+        remainTextView.setText(Integer.toString(members.getRemain())+'회');
 
         return convertView;
     }
 
-    public void addItem(String name, String goods, int remain) {
+    public void addItem(String name, String email, String goods, int remain) {
         Members members = new Members();
 
         members.setName(name);
+        members.setEmail(email);
         members.setGoods(goods);
         members.setRemain(remain);
 

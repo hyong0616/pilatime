@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_navigation_calendar_to_navigation_goods"
             app:destination="@id/navigation_goods" />
+        <action
+            android:id="@+id/action_navigation_calendar_to_navigation_member"
+            app:destination="@id/navigation_member" />
     </fragment>
 
     <fragment

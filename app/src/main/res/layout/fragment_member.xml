@@ -86,7 +86,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="출석"
+            android:text="선택"
             android:textSize="15sp"
             android:textAlignment="center"
             android:layout_weight="3"/>
@@ -108,6 +108,6 @@
         android:layout_weight="1"
         android:background="#CCCCFF"
         android:onClick="submitClick"
-        android:text="변경"/>
+        android:text="출석"/>
 
 </LinearLayout>

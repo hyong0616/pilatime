@@ -42,6 +42,9 @@ public class AdminCalendarActivity extends AppCompatActivity {
             } else if (str.equals("notification"))
             {
                 navController.navigate(R.id.action_navigation_calendar_to_navigation_notifications);
+            } else if (str.equals("member"))
+            {
+                navController.navigate(R.id.action_navigation_calendar_to_navigation_member);
             }
         }
     }
