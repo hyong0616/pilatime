@@ -1,10 +1,12 @@
 package com.soongsil.pilatime.uiMember.calendar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -26,9 +28,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.soongsil.pilatime.center.AddContextActivity;
 import com.soongsil.pilatime.center.ClassContent;
 import com.soongsil.pilatime.center.ClassContentAdapter;
 import com.soongsil.pilatime.R;
+import com.soongsil.pilatime.member.AddMemoActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -42,6 +46,7 @@ public class CalendarMemberFragment extends Fragment {
 
     public CalendarView calendarView;
     public ListView listView;
+    public Button addButton;
     String centerName;
     String className;
 
@@ -58,7 +63,7 @@ public class CalendarMemberFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_calendar_member, container, false);
 
         calendarView = view.findViewById(R.id.member_calendar);
-        /*현재 날짜로 setting*/
+        addButton = view.findViewById(R.id.btn_add);
 
         /*Adapter setting*/
         final ClassContentAdapter classContentAdapter = new ClassContentAdapter();
@@ -127,11 +132,12 @@ public class CalendarMemberFragment extends Fragment {
         *
         * 센터이름-> 날짜 -> 수업이름 -> 수업내용
         *goods/센터1/good/클래스이름/수업목록
+        * contents/센터1/2020.11.28/클래스이름
         * */
         if (!className.equals("")) {
 
-            DocumentReference Ref = db.collection("goods").document(centerName)
-                    .collection("good").document(className).collection("dates").document(date);
+            DocumentReference Ref = db.collection("contents").document(centerName)
+                    .collection(date).document(className);
             Ref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -164,21 +170,21 @@ public class CalendarMemberFragment extends Fragment {
                 final ClassContentAdapter dateContentAdapter = new ClassContentAdapter();
 
                 if (!className.equals("")) {
-                    DocumentReference Ref = db.collection("goods").document(centerName)
-                            .collection("good").document(className).collection("dates").document(date);
+                    DocumentReference Ref = db.collection("contents").document(centerName)
+                            .collection(nowDate).document(className);
                     Ref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                             if (task.isSuccessful()) {
                                 DocumentSnapshot document = task.getResult();
                                 if (document.exists()) {
-                                    classContentAdapter.addItem(className, document.getData().get("content").toString());
+                                    dateContentAdapter.addItem(className, document.getData().get("content").toString());
                                     Log.d(TAG, document.getId() + " => " + document.getData());
                                 } else {
                                     Log.d(TAG, "No such document");
                                 }
-                                classContentAdapter.notifyDataSetChanged();
-                                listView.setAdapter(classContentAdapter);
+                                dateContentAdapter.notifyDataSetChanged();
+                                listView.setAdapter(dateContentAdapter);
                             } else {
                                 Log.d(TAG, "get failed with ", task.getException());
                             }
@@ -187,6 +193,22 @@ public class CalendarMemberFragment extends Fragment {
                 }
             }
         });
+
+
+        /*메모 추가 버튼 클릭 시*/
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                /* 데이터 추가
+                Goods goods_1 = new Goods("화 목 A Class", "현재 : 6명","시간 : 14:00~15:00","정원 : 8명", "구성 : 30회(15주)", "350,000w");
+                db.collection("goods").document(myname).collection("good").document(goods_1.getName()).set(goods_1);
+                */
+                Intent intent = new Intent(getActivity(), AddMemoActivity.class);
+                startActivity(intent);
+            }
+        });
+
         return view;
     }
 }

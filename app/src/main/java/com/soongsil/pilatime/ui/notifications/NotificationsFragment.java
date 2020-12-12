@@ -78,7 +78,7 @@ public class NotificationsFragment extends Fragment {
         * 공지사항 > 센터 > 게시글고유번호 > 게시글
         * */
         CollectionReference conRef = db.collection("notifications").document(centerName).collection("notification");
-        conRef.orderBy("idx").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        conRef.orderBy("idx", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {

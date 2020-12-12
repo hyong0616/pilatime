@@ -11,7 +11,7 @@ public class Member {
     private String classCost;
     private String className;
     private String classCount;
-    private String classRemain;
+    private int classRemain;
     public Member(){}
 
     public Member(String email, String name, String phone, String centerName) {
@@ -22,9 +22,9 @@ public class Member {
         this.ackYn = "N";
         this.classType = "";
         this.classCost = "";
-        this.className = "";
-        this.classCount = "";
-        this.classRemain = "";
+        this.className = "신청목록 없음";
+        this.classCount = "-";
+        this.classRemain = 0;
     }
 
     public String getEmail() {
@@ -51,6 +51,6 @@ public class Member {
 
     public String getClassCount() { return this.classCount;}
 
-    public String getClassRemain() {return  this.classRemain;}
+    public int getClassRemain() {return  this.classRemain;}
 
 }

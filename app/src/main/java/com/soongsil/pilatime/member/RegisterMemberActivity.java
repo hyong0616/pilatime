@@ -23,6 +23,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.soongsil.pilatime.R;
 import com.soongsil.pilatime.center.AdminCalendarActivity;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class RegisterMemberActivity extends AppCompatActivity {
@@ -102,7 +105,16 @@ public class RegisterMemberActivity extends AppCompatActivity {
 
         /*Firebase Cloud Firestore*/
         Member member = new Member(idText.getText().toString(), memberNameText.getText().toString(), numberText.getText().toString(),centerNameText.getText().toString());
-        db.collection("members").document(idText.getText().toString()).set(member);
+        db.collection("members").document(centerNameText.getText().toString()).collection("member").document(idText.getText().toString()).set(member);
+
+        /*Firebase Cloud Firestore*/
+        Map<String, Object> docData = new HashMap<>();
+        docData.put("centerName", centerNameText.getText().toString());
+        docData.put("email", idText.getText().toString());
+        docData.put("name", memberNameText.getText().toString());
+
+        db.collection("member").document(idText.getText().toString()).set(docData);
+
 
 
         /*Firebase Authentication Signin*/

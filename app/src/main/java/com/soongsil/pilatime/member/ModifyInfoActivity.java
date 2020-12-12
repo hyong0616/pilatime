@@ -1,19 +1,7 @@
-package com.soongsil.pilatime.center;
+package com.soongsil.pilatime.member;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.soongsil.pilatime.R;
 
 import android.content.Context;
 import android.content.Intent;
@@ -25,40 +13,56 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.soongsil.pilatime.R;
+import com.soongsil.pilatime.center.AdminCalendarActivity;
+import com.soongsil.pilatime.center.ClassContent;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
-public class AddGoodsActivity extends AppCompatActivity {
+public class ModifyInfoActivity extends AppCompatActivity {
+
     public Button plusButton, closeButton;
-    public EditText nameText, timeText, capacityText, countText,costText;
+    public EditText nameText,centerNameText, phoneText;
+    String centerName;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_goods);
+        setContentView(R.layout.activity_modify_info);
 
+        /*Activity 팝업 화면 처럼 구성*/
         Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         int width = (int) (display.getWidth() * 0.9);
         int height = (int) (display.getHeight() * 0.7);
-
         getWindow().getAttributes().width = width;
         getWindow().getAttributes().height = height;
 
         plusButton = (Button) findViewById(R.id.btn_plus);
         closeButton = (Button) findViewById(R.id.btn_close);
-        nameText = (EditText) findViewById(R.id.editText_ClassName);
-        timeText = (EditText) findViewById(R.id.editText_ClassTime);
-        capacityText = (EditText) findViewById(R.id.editText_ClassCapacity);
-        countText = (EditText) findViewById(R.id.editText_ClassCount);
-        costText = (EditText) findViewById(R.id.editText_ClassCost);
+        phoneText = (EditText) findViewById(R.id.editText_myNumber);
+
         /*센터 이름 가져오기*/
-        String email = user.getEmail();
-        final CollectionReference docRef = db.collection("centers");
+        final String email = user.getEmail();
+        final CollectionReference docRef = db.collection("member");
         Query query = docRef.whereEqualTo("email",email);
         Task<QuerySnapshot> querySnapshotTask
                 = query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -82,27 +86,36 @@ public class AddGoodsActivity extends AppCompatActivity {
             Log.d(TAG, "Not yet");
         }
         List<DocumentSnapshot> document = querySnapshotTask.getResult().getDocuments();
-        final String centerName = document.get(0).getData().get("name").toString();
+        centerName = document.get(0).getData().get("centerName").toString();
+        Log.d(TAG, "CENTERNAME : "+centerName );
 
 
         plusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AddGoodsActivity.this, AdminCalendarActivity.class);
-                intent.putExtra("particularFragment","good");
-                /*현재 시간 가져오기*/
-                long now = System.currentTimeMillis();
-                Date mDate = new Date(now);
-                SimpleDateFormat mFormat = new SimpleDateFormat("yyyy.MM.dd");
-                String date = mFormat.format(mDate);
 
-                /*데이터 넣기
-                 * goods/센터1/good/개인레슨 A Class
+                /*휴대폰 번호 데이터 업데이트
+                 *
                  * */
-                Goods goods = new Goods(nameText.getText().toString(), "0",timeText.getText().toString(),capacityText.getText().toString(), countText.getText().toString(), costText.getText().toString());
-                db.collection("goods").document(centerName).collection("good").document(goods.getName()).set(goods);
+                DocumentReference docRef =  db.collection("members")
+                        .document(centerName).collection("member").document(email);
 
-                startActivity(intent);
+                docRef.update("phone", phoneText.getText().toString())
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Intent intent = new Intent(ModifyInfoActivity.this, MemberCalendarActivity.class);
+                                intent.putExtra("particularFragment","classManage");
+                                Log.d(TAG, "승인 버튼 : DocumentSnapshot successfully updated!");
+                                startActivity(intent);
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "승인 버튼 : Error updating document", e);
+                            }
+                        });
             }
         });
         closeButton.setOnClickListener(new View.OnClickListener() {
@@ -112,5 +125,6 @@ public class AddGoodsActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
     }
 }

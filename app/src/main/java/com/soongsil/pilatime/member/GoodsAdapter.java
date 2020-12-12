@@ -53,11 +53,11 @@ public class GoodsAdapter extends BaseAdapter {
 
         Goods goods = goodsList.get(position);
         nameTextView.setText(goods.getName());
-        statusTextView.setText(goods.getStatus());
-        timeTextView.setText(goods.getTime());
-        capacityTextView.setText(goods.getCapacity());
-        countTextView.setText(goods.getCount());
-        costTextView.setText(goods.getCost());
+        statusTextView.setText("현재 : "+goods.getStatus()+"명");
+        timeTextView.setText("시간 : "+goods.getTime());
+        capacityTextView.setText("정원 : "+goods.getCapacity()+"명");
+        countTextView.setText("구성 : "+goods.getCount()+"회");
+        costTextView.setText("가격 : "+goods.getCost()+"원");
 
         return convertView;
     }

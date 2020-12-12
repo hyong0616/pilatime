@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".member.AddMemoActivity"
+            android:theme="@style/NoTitleBarDialog"></activity>
+        <activity
+            android:name=".member.ModifyInfoActivity"
+            android:theme="@style/NoTitleBarDialog"></activity>
+        <activity
             android:name=".center.AddNotificationActivity"
             android:theme="@style/NoTitleBarDialog" />
         <activity

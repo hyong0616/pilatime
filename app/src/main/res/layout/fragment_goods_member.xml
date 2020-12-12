@@ -8,7 +8,8 @@
     android:padding="20dp">
 
     <ListView
-        android:dividerHeight="10sp"
+        android:dividerHeight="20dp"
+        android:divider="@android:color/transparent"
         android:choiceMode="singleChoice"
         android:layout_weight="10"
         android:id="@+id/list_view"

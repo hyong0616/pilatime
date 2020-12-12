@@ -149,7 +149,7 @@ public class GoodsMemberFragment extends Fragment {
                                 "classTime",nowgoods.getTime(),                                             //수업 시간
                                 "classTotal",Integer.parseInt(nowgoods.getCount()),                         //전체 수업 회차
                                 "classRemain",Integer.parseInt(nowgoods.getCount()),                        //남은 수업 회차
-                                "classCost",Integer.parseInt(nowgoods.getCost())                            //가격
+                                "classCost",nowgoods.getCost()                            //가격
                                 )
 
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
