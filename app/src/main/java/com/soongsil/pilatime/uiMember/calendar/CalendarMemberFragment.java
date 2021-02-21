@@ -45,7 +45,7 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 public class CalendarMemberFragment extends Fragment {
 
     public CalendarView calendarView;
-    public ListView listView;
+    public ListView listView, listView2;
     public Button addButton;
     String centerName;
     String className;
@@ -157,6 +157,35 @@ public class CalendarMemberFragment extends Fragment {
                 }
             });
         }
+
+        /*메모 내용 가져오기
+        *
+        * /member/mem1@pila.com/memo/2020.12.12
+        * */
+        final ClassContentAdapter memoContentAdapter = new ClassContentAdapter();
+        listView2 = (ListView) view.findViewById(R.id.list_view2);
+        DocumentReference Ref = db.collection("member").document(email)
+                .collection("memo").document(date);
+        Ref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        memoContentAdapter.addItem(date, document.getData().get("content").toString());
+                        Log.d(TAG, document.getId() + " => " + document.getData());
+                    } else {
+                        Log.d(TAG, "No such document");
+                    }
+                    memoContentAdapter.notifyDataSetChanged();
+                    listView2.setAdapter(memoContentAdapter);
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+            }
+        });
+
+
 
         /*날짜가 바뀔때마다 db 내용 가져오기
          *

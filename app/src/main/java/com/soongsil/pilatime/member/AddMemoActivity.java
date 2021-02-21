@@ -42,7 +42,7 @@ public class AddMemoActivity extends AppCompatActivity {
 
         plusButton = (Button) findViewById(R.id.btn_plus);
         closeButton = (Button) findViewById(R.id.btn_close);
-        contentText = (EditText) findViewById(R.id.editText_ClassContents);
+        contentText = (EditText) findViewById(R.id.editTextMemo);
 
 
 

@@ -136,7 +136,7 @@ public class GoodsMemberFragment extends Fragment {
                         goods = goodsAdapter.getItem(checked); //선택한 상품 정보
                         Log.d(TAG, goods.getName() + " => " + goods.getTime());
 
-                        Goods nowgoods = new Goods("클래스 A", "0", "11:00-12:00 월 수 금", "5", "30", "400000");
+                        Goods nowgoods = new Goods("클래스 A", "3", "10:00-12:00 월 수 금", "5", "30", "2,000,000");
 
                         /*수업 정보 update*/
                         DocumentReference docRef =  db.collection("members")

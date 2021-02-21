@@ -115,7 +115,7 @@ public class ClassManageFragment extends Fragment {
         List<DocumentSnapshot> document2 = querySnapshotTask2.getResult().getDocuments();
         className = document2.get(0).getData().get("className").toString();
 
-        if (!className.equals("")) {
+        if (!className.equals("신청목록 없음")) {
             classNameTextView.setText(className);
             classStatusTextView.setText("현재 수강 인원 : "+document2.get(0).getData().get("className").toString()+"명");
             classTimeTextView.setText("시간 : "+document2.get(0).getData().get("classTime").toString());

@@ -5,6 +5,7 @@ public class Memo {
     private String content;
 
     public Memo() { }
+
     public Memo(String date, String content) {
         this.date= date;
         this.content = content;
